@@ -23,6 +23,7 @@ using UserNotifications;
 using VKontakte;
 using VKontakte.Core;
 using VKontakte.API.Methods;
+using VKontakte.API.Models;
 using WebKit;
 
 namespace VKontakte
@@ -600,6 +601,12 @@ namespace VKontakte
 		[Export ("name_gen", ArgumentSemantic.Strong)]
 		string name_gen { get; set; }
 	}
+	
+	// @interface VKUsersArray : VKApiObjectArray
+	[BaseType (typeof(VKApiObjectArray))]
+	interface VKUsersArray
+	{
+	}
 }
 
 namespace VKontakte.Views
@@ -1033,6 +1040,79 @@ namespace VKontakte.API
 		// -(VKRequest *)getById:(NSDictionary *)params;
 		[Export ("getById:")]
 		VKRequest GetById (NSDictionary @params);
+	}
+}
+
+namespace VKontakte.API.Models
+{
+	// @interface VKApiObjectArray : VKApiObject <NSFastEnumeration>
+	[BaseType (typeof(VKApiObject))]
+	interface VKApiObjectArray // TODO : INSFastEnumeration
+	{
+		// @property (readonly, nonatomic) NSUInteger count;
+		[Export ("count")]
+		nuint Count { get; }
+
+		// @property (nonatomic, strong) NSMutableArray * items;
+		[Export ("items", ArgumentSemantic.Strong)]
+		NSMutableArray Items { get; set; }
+
+		// -(instancetype)initWithDictionary:(NSDictionary *)dict objectClass:(Class)objectClass;
+		[Export ("initWithDictionary:objectClass:")]
+		IntPtr Constructor (NSDictionary dict, Class objectClass);
+
+		// -(instancetype)initWithArray:(NSArray *)array objectClass:(Class)objectClass;
+		[Export ("initWithArray:objectClass:")]
+		IntPtr Constructor (VKApiObject[] array, Class objectClass);
+
+		// -(instancetype)initWithArray:(NSArray *)array;
+		[Export ("initWithArray:")]
+		IntPtr Constructor (VKApiObject[] array);
+
+		// -(id)objectAtIndex:(NSInteger)idx;
+		[Export ("objectAtIndex:")]
+		VKApiObject ObjectAtIndex (nint idx);
+
+		// -(id)objectAtIndexedSubscript:(NSUInteger)idx __attribute__((availability(ios, introduced=6_0)));
+		[Introduced (PlatformName.iOS, 6, 0)]
+		[Export ("objectAtIndexedSubscript:")]
+		VKApiObject ObjectAtIndexedSubscript (nuint idx);
+
+		// -(NSEnumerator *)objectEnumerator;
+		[Export ("objectEnumerator")]
+		NSEnumerator GetObjectEnumerator ();
+
+		// -(NSEnumerator *)reverseObjectEnumerator;
+		[Export ("reverseObjectEnumerator")]
+		NSEnumerator GetReverseObjectEnumerator ();
+
+		// -(void)addObject:(id)object;
+		[Export ("addObject:")]
+		void AddObject (VKApiObject @object);
+
+		// -(void)removeObject:(id)object;
+		[Export ("removeObject:")]
+		void RemoveObject (VKApiObject @object);
+
+		// -(void)insertObject:(id)object atIndex:(NSUInteger)index;
+		[Export ("insertObject:atIndex:")]
+		void InsertObject (VKApiObject @object, nuint index);
+
+		// -(id)firstObject;
+		[Export ("firstObject")]
+		VKApiObject FirstObject { get; }
+
+		// -(id)lastObject;
+		[Export ("lastObject")]
+		VKApiObject LastObject { get; }
+
+		// -(void)serializeTo:(NSMutableDictionary *)dict withName:(NSString *)name;
+		[Export ("serializeTo:withName:")]
+		void SerializeTo (NSMutableDictionary dict, string name);
+
+		// -(Class)objectClass;
+		[Export ("objectClass")]
+		Class ObjectClass { get; }
 	}
 }
 
