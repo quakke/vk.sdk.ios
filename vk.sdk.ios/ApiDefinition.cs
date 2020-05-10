@@ -1,34 +1,16 @@
 ﻿using System;
-using AVFoundation;
-using CloudKit;
-using CoreAnimation;
-using CoreData;
 using CoreFoundation;
-using CoreGraphics;
-using CoreImage;
-using CoreLocation;
-using CoreVideo;
-using FileProvider;
 using Foundation;
-using IOSurface;
-using ImageIO;
-using Intents;
-using LinkPresentation;
-using Metal;
 using ObjCRuntime;
-using OpenGLES;
-using Security;
 using UIKit;
-using UserNotifications;
-using VKontakte;
-using VKontakte.Core;
 using VKontakte.API.Methods;
 using VKontakte.API.Models;
+using VKontakte.Core;
 using WebKit;
 
 namespace VKontakte
 {
-	[Static]
+    [Static]
 	partial interface VKPermissions
 	{
 		// extern NSString *const VK_PER_NOTIFY;
@@ -583,8 +565,8 @@ namespace VKontakte
 
 namespace VKontakte.Views
 {
-	// @interface VKAuthorizationContext : VKObject
-	[BaseType (typeof(VKObject))]
+    // @interface VKAuthorizationContext : VKObject
+    [BaseType (typeof(VKObject))]
 	interface VKAuthorizationContext
 	{
 		// @property (readonly, nonatomic, strong) NSString * clientId;
@@ -646,8 +628,8 @@ namespace VKontakte.Views
 
 namespace VKontakte.Core
 {
-	// @interface VKObject : NSObject
-	[BaseType (typeof(NSObject))]
+    // @interface VKObject : NSObject
+    [BaseType (typeof(NSObject))]
 	interface VKObject
 	{
 	}
@@ -924,8 +906,8 @@ namespace VKontakte.Core
 
 namespace VKontakte.API
 {
-	// @interface VKApi : NSObject
-	[BaseType (typeof(NSObject))]
+    // @interface VKApi : NSObject
+    [BaseType (typeof(NSObject))]
 	interface VKApi
 	{
 		// +(VKApiUsers *)users;
@@ -1017,8 +999,8 @@ namespace VKontakte.API
 
 namespace VKontakte.API.Models
 {
-	// @interface VKApiObjectArray : VKApiObject <NSFastEnumeration>
-	[BaseType (typeof(VKApiObject))]
+    // @interface VKApiObjectArray : VKApiObject <NSFastEnumeration>
+    [BaseType (typeof(VKApiObject))]
 	interface VKApiObjectArray // TODO : INSFastEnumeration
 	{
 		// @property (readonly, nonatomic) NSUInteger count;
@@ -1090,7 +1072,7 @@ namespace VKontakte.API.Models
 
 namespace VKontakte.API.Methods
 {
-	[Static]
+    [Static]
 	partial interface VKApiConst
 	{
 		// extern NSString *const VK_API_GROUP_ID;
