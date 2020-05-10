@@ -3,7 +3,6 @@ using CoreFoundation;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
-using VKontakte;
 using VKontakte.API.Methods;
 using VKontakte.API.Models;
 using VKontakte.Core;
@@ -12,7 +11,7 @@ using WebKit;
 namespace VKontakte
 {
     [Static]
-	partial interface IVKPermissions
+	partial interface VKPermissions
 	{
 		// extern NSString *const VK_PER_NOTIFY;
 		[Field ("VK_PER_NOTIFY", "__Internal")]
@@ -62,88 +61,88 @@ namespace VKontakte
 		[Field("VK_PER_EMAIL", "__Internal")]
 		NSString Email { get; }
 	}
-
+	
 	interface IVKSdkDelegate
 	{
+	}
+
+	// @protocol VKSdkDelegate <NSObject>
+	[Protocol, Model]
+	[BaseType (typeof(NSObject))]
+	interface VKSdkDelegate
+	{
+		// @required -(void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result;
+		[Abstract]
+		[Export ("vkSdkAccessAuthorizationFinishedWithResult:")]
+		void AccessAuthorizationFinished (VKAuthorizationResult result);
+
+		// @required -(void)vkSdkUserAuthorizationFailed;
+		[Abstract]
+		[Export ("vkSdkUserAuthorizationFailed")]
+		void UserAuthorizationFailed ();
+
+		// @optional -(void)vkSdkAuthorizationStateUpdatedWithResult:(VKAuthorizationResult*)result;
+		[Export ("vkSdkAuthorizationStateUpdatedWithResult:")]
+		void AuthorizationStateUpdated (VKAuthorizationResult result);
+
+		// @optional -(void)vkSdkAccessTokenUpdated:(VKAccessToken *)newToken oldToken:(VKAccessToken *)oldToken;
+		[Export ("vkSdkAccessTokenUpdated:oldToken:")]
+		void AccessTokenUpdated (VKAccessToken newToken, VKAccessToken oldToken);
+
+		// @optional -(void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken;
+		[Export ("vkSdkTokenHasExpired:")]
+		void TokenHasExpired (VKAccessToken expiredToken);
 	}
 
 	interface IVKSdkUIDelegate
 	{
 	}
 
-	// @protocol VKSdkDelegate <NSObject>
-	[Protocol, Model]
-	[BaseType(typeof(NSObject))]
-	interface VKSdkDelegate
-	{
-		// @required -(void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result;
-		[Abstract]
-		[Export("vkSdkAccessAuthorizationFinishedWithResult:")]
-		void AccessAuthorizationFinished(IVKAuthorizationResult result);
-
-		// @required -(void)vkSdkUserAuthorizationFailed;
-		[Abstract]
-		[Export("vkSdkUserAuthorizationFailed")]
-		void UserAuthorizationFailed();
-
-		// @optional -(void)vkSdkAuthorizationStateUpdatedWithResult:(VKAuthorizationResult*)result;
-		[Export("vkSdkAuthorizationStateUpdatedWithResult:")]
-		void AuthorizationStateUpdated(IVKAuthorizationResult result);
-
-		// @optional -(void)vkSdkAccessTokenUpdated:(VKAccessToken *)newToken oldToken:(VKAccessToken *)oldToken;
-		[Export("vkSdkAccessTokenUpdated:oldToken:")]
-		void AccessTokenUpdated(IVKAccessToken newToken, IVKAccessToken oldToken);
-
-		// @optional -(void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken;
-		[Export("vkSdkTokenHasExpired:")]
-		void TokenHasExpired(IVKAccessToken expiredToken);
-	}
-
 	// @protocol VKSdkUIDelegate <NSObject>
 	[Protocol, Model]
-	[BaseType(typeof(NSObject))]
+	[BaseType (typeof(NSObject))]
 	interface VKSdkUIDelegate
 	{
 		// @required -(void)vkSdkShouldPresentViewController:(UIViewController *)controller;
 		[Abstract]
-		[Export("vkSdkShouldPresentViewController:")]
-		void ShouldPresentViewController(UIViewController controller);
+		[Export ("vkSdkShouldPresentViewController:")]
+		void ShouldPresentViewController (UIViewController controller);
 
 		// @required -(void)vkSdkNeedCaptchaEnter:(VKError *)captchaError;
 		[Abstract]
-		[Export("vkSdkNeedCaptchaEnter:")]
-		void NeedCaptchaEnter(VKError captchaError);
+		[Export ("vkSdkNeedCaptchaEnter:")]
+		void NeedCaptchaEnter (VKError captchaError);
 
 		// @optional -(void)vkSdkWillDismissViewController:(UIViewController *)controller;
-		[Export("vkSdkWillDismissViewController:")]
-		void WillDismissViewController(UIViewController controller);
+		[Export ("vkSdkWillDismissViewController:")]
+		void WillDismissViewController (UIViewController controller);
 
 		// @optional -(void)vkSdkDidDismissViewController:(UIViewController *)controller;
-		[Export("vkSdkDidDismissViewController:")]
-		void DidDismissViewController(UIViewController controller);
+		[Export ("vkSdkDidDismissViewController:")]
+		void DidDismissViewController (UIViewController controller);
 	}
 
 	// @interface VKSdk : NSObject
-	[BaseType(typeof(NSObject))]
+	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
-	interface IVKSdk
+	interface VKSdk
 	{
 		// @property (readwrite, nonatomic, weak) id<VKSdkUIDelegate> _Nullable uiDelegate;
-		[NullAllowed, Export("uiDelegate", ArgumentSemantic.Weak)]
+		[NullAllowed, Export ("uiDelegate", ArgumentSemantic.Weak)]
 		IVKSdkUIDelegate UiDelegate { get; set; }
 
 		// @property (readonly, copy, nonatomic) NSString * currentAppId;
-		[Export("currentAppId")]
+		[Export ("currentAppId")]
 		string CurrentAppId { get; }
 
 		// @property (readonly, copy, nonatomic) NSString * apiVersion;
-		[Export("apiVersion")]
+		[Export ("apiVersion")]
 		string ApiVersion { get; }
 
 		// +(instancetype)instance;
 		[Static]
-		[Export("instance")]
-		IVKSdk Instance { get; }
+		[Export ("instance")]
+		VKSdk Instance { get; }
 
 		// +(BOOL)initialized;
 		[Static]
@@ -152,83 +151,83 @@ namespace VKontakte
 
 		// +(instancetype)initializeWithAppId:(NSString *)appId;
 		[Static]
-		[Export("initializeWithAppId:")]
-		IVKSdk Initialize(string appId);
+		[Export ("initializeWithAppId:")]
+		VKSdk Initialize (string appId);
 
 		// +(instancetype)initializeWithAppId:(NSString *)appId apiVersion:(NSString *)version;
 		[Static]
-		[Export("initializeWithAppId:apiVersion:")]
-		IVKSdk Initialize(string appId, string version);
+		[Export ("initializeWithAppId:apiVersion:")]
+		VKSdk Initialize (string appId, string version);
 
 		// -(void)registerDelegate:(id<VKSdkDelegate>)delegate;
-		[Export("registerDelegate:")]
-		void RegisterDelegate(IVKSdkDelegate @delegate);
+		[Export ("registerDelegate:")]
+		void RegisterDelegate (IVKSdkDelegate @delegate);
 
 		// -(void)unregisterDelegate:(id<VKSdkDelegate>)delegate;
-		[Export("unregisterDelegate:")]
-		void UnregisterDelegate(IVKSdkDelegate @delegate);
+		[Export ("unregisterDelegate:")]
+		void UnregisterDelegate (IVKSdkDelegate @delegate);
 
 		// +(void)authorize:(NSArray *)permissions;
 		[Static]
-		[Export("authorize:")]
-		void Authorize(string[] permissions);
+		[Export ("authorize:")]
+		void Authorize (string[] permissions);
 
 		// +(void)authorize:(NSArray *)permissions withOptions:(VKAuthorizationOptions)options;
 		[Static]
-		[Export("authorize:withOptions:")]
-		void Authorize(string[] permissions, VKAuthorizationOptions options);
+		[Export ("authorize:withOptions:")]
+		void Authorize (string[] permissions, VKAuthorizationOptions options);
 
 		// +(VKAccessToken *)accessToken;
 		[Static]
-		[Export("accessToken")]
-		IVKAccessToken AccessToken { get; }
+		[Export ("accessToken")]
+		VKAccessToken AccessToken { get; }
 
 		// +(BOOL)processOpenURL:(NSURL *)passedUrl fromApplication:(NSString *)sourceApplication;
 		[Static]
-		[Export("processOpenURL:fromApplication:")]
-		bool ProcessOpenUrl(NSUrl passedUrl, string sourceApplication);
+		[Export ("processOpenURL:fromApplication:")]
+		bool ProcessOpenUrl (NSUrl passedUrl, string sourceApplication);
 
 		// +(BOOL)isLoggedIn;
 		[Static]
-		[Export("isLoggedIn")]
+		[Export ("isLoggedIn")]
 		bool IsLoggedIn { get; }
 
 		// +(void)wakeUpSession:(NSArray *)permissions completeBlock:(void (^)(VKAuthorizationState, NSError *))wakeUpBlock;
 		[Static]
-		[Export("wakeUpSession:completeBlock:")]
-		void WakeUpSession(string[] permissions, Action<VKAuthorizationState, NSError> wakeUpBlock);
+		[Export ("wakeUpSession:completeBlock:")]
+		void WakeUpSession (string[] permissions, Action<VKAuthorizationState, NSError> wakeUpBlock);
 
 		// +(void)forceLogout;
 		[Static]
-		[Export("forceLogout")]
-		void ForceLogout();
+		[Export ("forceLogout")]
+		void ForceLogout ();
 
 		// +(BOOL)vkAppMayExists;
 		[Static]
-		[Export("vkAppMayExists")]
+		[Export ("vkAppMayExists")]
 		bool VkAppMayExists { get; }
 
 		// -(BOOL)hasPermissions:(NSArray *)permissions;
-		[Export("hasPermissions:")]
-		bool HasPermissions(string[] permissions);
+		[Export ("hasPermissions:")]
+		bool HasPermissions (string[] permissions);
 
 		// +(void)setSchedulerEnabled:(BOOL)enabled;
 		[Static]
-		[Export("setSchedulerEnabled:")]
-		void SetSchedulerEnabled(bool enabled);
+		[Export ("setSchedulerEnabled:")]
+		void SetSchedulerEnabled (bool enabled);
 	}
-
+	
 	// @interface VKAuthorizationResult : VKObject
-	[BaseType (typeof(IVKObject))]
-	interface IVKAuthorizationResult
+	[BaseType (typeof(VKObject))]
+	interface VKAuthorizationResult
 	{
 		// @property (readonly, nonatomic, strong) VKAccessToken * token;
 		[Export ("token", ArgumentSemantic.Strong)]
-		IVKAccessToken Token { get; }
+		VKAccessToken Token { get; }
 
 		// @property (readonly, nonatomic, strong) VKUser * user;
 		[Export ("user", ArgumentSemantic.Strong)]
-		IVKUser User { get; }
+		VKUser User { get; }
 
 		// @property (readonly, nonatomic, strong) NSError * error;
 		[Export ("error", ArgumentSemantic.Strong)]
@@ -240,16 +239,16 @@ namespace VKontakte
 	}
 
 	// @interface VKMutableAuthorizationResult : VKAuthorizationResult
-	[BaseType (typeof(IVKAuthorizationResult))]
-	interface IVKMutableAuthorizationResult
+	[BaseType (typeof(VKAuthorizationResult))]
+	interface VKMutableAuthorizationResult
 	{
 		// @property (readwrite, nonatomic, strong) VKAccessToken * token;
 		[Export ("token", ArgumentSemantic.Strong)]
-		IVKAccessToken Token { get; set; }
+		VKAccessToken Token { get; set; }
 
 		// @property (readwrite, nonatomic, strong) VKUser * user;
 		[Export ("user", ArgumentSemantic.Strong)]
-		IVKUser User { get; set; }
+		VKUser User { get; set; }
 
 		// @property (readwrite, nonatomic, strong) NSError * error;
 		[Export ("error", ArgumentSemantic.Strong)]
@@ -261,8 +260,8 @@ namespace VKontakte
 	}
 	
 	// @interface VKAccessToken : VKObject <NSCoding>
-	[BaseType (typeof(IVKObject))]
-	interface IVKAccessToken : INSCoding
+	[BaseType (typeof(VKObject))]
+	interface VKAccessToken : INSCoding
 	{
 		// @property (readonly, copy, nonatomic) NSString * accessToken;
 		[Export ("accessToken")]
@@ -298,22 +297,22 @@ namespace VKontakte
 
 		// @property (readonly, nonatomic, strong) VKUser * localUser;
 		[Export ("localUser", ArgumentSemantic.Strong)]
-		IVKUser LocalUser { get; }
+		VKUser LocalUser { get; }
 
 		// +(instancetype)tokenFromUrlString:(NSString *)urlString;
 		[Static]
 		[Export ("tokenFromUrlString:")]
-		IVKAccessToken TokenFromUrlString (string urlString);
+		VKAccessToken TokenFromUrlString (string urlString);
 
 		// +(instancetype)tokenWithToken:(NSString *)accessToken secret:(NSString *)secret userId:(NSString *)userId;
 		[Static]
 		[Export ("tokenWithToken:secret:userId:")]
-		IVKAccessToken TokenFromToken (string accessToken, string secret, string userId);
+		VKAccessToken TokenFromToken (string accessToken, string secret, string userId);
 
 		// +(instancetype)savedToken:(NSString *)defaultsKey;
 		[Static]
 		[Export ("savedToken:")]
-		IVKAccessToken TokenFromDefaults (string defaultsKey);
+		VKAccessToken TokenFromDefaults (string defaultsKey);
 
 		// -(void)saveTokenToDefaults:(NSString *)defaultsKey;
 		[Export ("saveTokenToDefaults:")]
@@ -330,8 +329,8 @@ namespace VKontakte
 	}
 
 	// @interface VKAccessTokenMutable : VKAccessToken
-	[BaseType (typeof(IVKAccessToken))]
-	interface IVKAccessTokenMutable
+	[BaseType (typeof(VKAccessToken))]
+	interface VKAccessTokenMutable
 	{
 		// @property (readwrite, copy, nonatomic) NSString * accessToken;
 		[Export ("accessToken")]
@@ -359,12 +358,12 @@ namespace VKontakte
 
 		// @property (readwrite, nonatomic, strong) VKUser * localUser;
 		[Export ("localUser", ArgumentSemantic.Strong)]
-		IVKUser LocalUser { get; set; }
+		VKUser LocalUser { get; set; }
 	}
 	
 	// @interface VKApiObject : VKObject <VKApiObject>
-	[BaseType (typeof(IVKObject))]
-	interface IVKApiObject // TODO : IVKApiObject
+	[BaseType (typeof(VKObject))]
+	interface VKApiObject // TODO : IVKApiObject
 	{
 		// @property (nonatomic, strong) NSDictionary * fields;
 		[Export ("fields", ArgumentSemantic.Strong)]
@@ -381,8 +380,8 @@ namespace VKontakte
 	}
 	
 	// @interface VKUser : VKApiObject
-	[BaseType (typeof(IVKApiObject))]
-	interface IVKUser
+	[BaseType (typeof(VKApiObject))]
+	interface VKUser
 	{
 		// @property (nonatomic, strong) NSNumber * id;
 		[Export ("id", ArgumentSemantic.Strong)]
@@ -558,8 +557,8 @@ namespace VKontakte
 	}
 	
 	// @interface VKUsersArray : VKApiObjectArray
-	[BaseType (typeof(IVKApiObjectArray))]
-	interface IVKUsersArray
+	[BaseType (typeof(VKApiObjectArray))]
+	interface VKUsersArray
 	{
 	}
 }
@@ -567,8 +566,8 @@ namespace VKontakte
 namespace VKontakte.Views
 {
     // @interface VKAuthorizationContext : VKObject
-    [BaseType (typeof(IVKObject))]
-	interface IVKAuthorizationContext
+    [BaseType (typeof(VKObject))]
+	interface VKAuthorizationContext
 	{
 		// @property (readonly, nonatomic, strong) NSString * clientId;
 		[Export("clientId", ArgumentSemantic.Strong)]
@@ -589,12 +588,12 @@ namespace VKontakte.Views
 		// +(instancetype)contextWithAuthType:(VKAuthorizationType)authType clientId:(NSString *)clientId displayType:(NSString *)displayType scope:(NSArray<NSString *> *)scope revoke:(BOOL)revoke;
 		[Static]
 		[Export("contextWithAuthType:clientId:displayType:scope:revoke:")]
-		IVKAuthorizationContext Create (VKAuthorizationType authType, string clientId, string displayType, string[] scope, bool revoke);
+		VKAuthorizationContext Create (VKAuthorizationType authType, string clientId, string displayType, string[] scope, bool revoke);
 	}
 
 	// @interface VKAuthorizeController : UIViewController <IWKUIDelegate>
 	[BaseType (typeof(UIViewController))]
-	interface IVKAuthorizeController : IWKUIDelegate
+	interface VKAuthorizeController : IWKUIDelegate
 	{
 		// +(void)presentForAuthorizeWithAppId:(NSString *)appId andPermissions:(NSArray *)permissions revokeAccess:(BOOL)revoke displayType:(VKDisplayType)displayType;
 		[Static]
@@ -609,17 +608,17 @@ namespace VKontakte.Views
 		// +(NSURL *)buildAuthorizationURLWithContext:(VKAuthorizationContext *)ctx;
 		[Static]
 		[Export("buildAuthorizationURLWithContext:")]
-		NSUrl BuildAuthorizationUrl (IVKAuthorizationContext ctx);
+		NSUrl BuildAuthorizationUrl (VKAuthorizationContext ctx);
 	}
 	
 	// @interface VKCaptchaViewController : UIViewController
 	[BaseType (typeof(UIViewController))]
-	interface IVKCaptchaViewController
+	interface VKCaptchaViewController
 	{
 		// +(instancetype)captchaControllerWithError:(VKError *)error;
 		[Static]
 		[Export ("captchaControllerWithError:")]
-		IVKCaptchaViewController Create (VKError error);
+		VKCaptchaViewController Create (VKError error);
 
 		// -(void)presentIn:(UIViewController *)viewController;
 		[Export ("presentIn:")]
@@ -631,12 +630,12 @@ namespace VKontakte.Core
 {
     // @interface VKObject : NSObject
     [BaseType (typeof(NSObject))]
-	interface IVKObject
+	interface VKObject
 	{
 	}
 	
 	// @interface VKError : VKObject
-	[BaseType(typeof(IVKObject))]
+	[BaseType(typeof(VKObject))]
 	interface VKError
 	{
 		/// Contains system HTTP error
@@ -652,7 +651,7 @@ namespace VKontakte.Core
 		/// Request which caused error
 		// @property(nonatomic, strong) VKRequest *request;
 		[Export ("request", ArgumentSemantic.Strong)]
-		IVKRequest Request { get; set; }
+		VKRequest Request { get; set; }
 		
 		/// May contains such errors:\n <b>HTTP status code</b> if HTTP error occured;\n <b>VK_API_ERROR</b> if API error occured;\n <b>VK_API_CANCELED</b> if request was canceled;\n <b>VK_API_REQUEST_NOT_PREPARED</b> if error occured while preparing request;
 		// @property(nonatomic, assign) NSInteger errorCode;
@@ -700,8 +699,8 @@ namespace VKontakte.Core
 	}
 	
 	// @interface VKRequestTiming : VKObject
-	[BaseType(typeof(IVKObject))]
-	interface IVKRequestTiming
+	[BaseType(typeof(VKObject))]
+	interface VKRequestTiming
 	{
 		/// Date of request start
 		// @property(nonatomic, strong) NSDate *startTime;
@@ -730,8 +729,8 @@ namespace VKontakte.Core
 	}
 
 	// @interface VKRequest : VKObject
-	[BaseType(typeof(IVKObject))]
-	interface IVKRequest
+	[BaseType(typeof(VKObject))]
+	interface VKRequest
 	{
 		/// Specify progress for uploading or downloading. Useless for text requests (because gzip encoding bytesTotal will always return -1)
 		// @property(nonatomic, copy) void (^progressBlock)(VKProgressType progressType, long long bytesLoaded, long long bytesTotal);
@@ -740,7 +739,7 @@ namespace VKontakte.Core
 		/// Specify completion block for request
 		// @property(nonatomic, copy) void (^completeBlock)(VKResponse *response);
 		[Export ("completeBlock", ArgumentSemantic.Copy)]
-		Action<IVKResponse> CompleteBlock { get; set; }
+		Action<VKResponse> CompleteBlock { get; set; }
 		
 		/// Specity error (HTTP or API) block for request.
 		// @property(nonatomic, copy) void (^errorBlock)(NSError *error);
@@ -810,7 +809,7 @@ namespace VKontakte.Core
 		/// Returns info about request timings
 		// @property(nonatomic, readonly) VKRequestTiming *requestTiming;
 		[Export("requestTiming")]
-		IVKRequestTiming RequestTiming { get; }
+		VKRequestTiming RequestTiming { get; }
 		
 		/// Return YES if current request was started
 		// @property(nonatomic, readonly) BOOL isExecuting;
@@ -826,25 +825,25 @@ namespace VKontakte.Core
 		[Obsolete]
 		[Static]
 		[Export ("requestWithMethod:andParameters:andHttpMethod:")]
-		IVKRequest Create (string method, [NullAllowed] NSDictionary parameters, string httpMethod);
+		VKRequest Create (string method, [NullAllowed] NSDictionary parameters, string httpMethod);
 
 		// +(instancetype)requestWithMethod:(NSString *)method andParameters:(NSDictionary *)parameters __attribute__((deprecated("")));
 		[Obsolete]
 		[Static]
 		[Export ("requestWithMethod:andParameters:")]
-		IVKRequest Create (string method, [NullAllowed] NSDictionary parameters);
+		VKRequest Create (string method, [NullAllowed] NSDictionary parameters);
 
 		// +(instancetype)requestWithMethod:(NSString *)method andParameters:(NSDictionary *)parameters modelClass:(Class)modelClass __attribute__((deprecated("")));
 		[Obsolete]
 		[Static]
 		[Export ("requestWithMethod:andParameters:modelClass:")]
-		IVKRequest Create (string method, [NullAllowed] NSDictionary parameters, Class modelClass);
+		VKRequest Create (string method, [NullAllowed] NSDictionary parameters, Class modelClass);
 
 		// +(instancetype)requestWithMethod:(NSString *)method andParameters:(NSDictionary *)parameters andHttpMethod:(NSString *)httpMethod classOfModel:(Class)modelClass __attribute__((deprecated("")));
 		[Obsolete]
 		[Static]
 		[Export ("requestWithMethod:andParameters:andHttpMethod:classOfModel:")]
-		IVKRequest Create (string method, [NullAllowed] NSDictionary parameters, string httpMethod, Class modelClass);
+		VKRequest Create (string method, [NullAllowed] NSDictionary parameters, string httpMethod, Class modelClass);
 
 		// -(NSURLRequest *)getPreparedRequest;
 		[Export ("getPreparedRequest")]
@@ -852,7 +851,11 @@ namespace VKontakte.Core
 
 		// -(void)executeWithResultBlock:(void (^)(VKResponse *))completeBlock errorBlock:(void (^)(NSError *))errorBlock;
 		[Export ("executeWithResultBlock:errorBlock:")]
-		void Execute (Action<IVKResponse> completeBlock, Action<VKException> errorBlock);
+		void Execute (Action<VKResponse> completeBlock, Action<NSError> errorBlock);
+
+		// -(void)executeAfter:(VKRequest *)request withResultBlock:(void (^)(VKResponse *))completeBlock errorBlock:(void (^)(NSError *))errorBlock;
+		[Export ("executeAfter:withResultBlock:errorBlock:")]
+		void ExecuteAfter (VKRequest request, Action<VKResponse> completeBlock, Action<NSError> errorBlock);
 
 		// -(void)start;
 		[Export ("start")]
@@ -880,12 +883,12 @@ namespace VKontakte.Core
 	}
 	
 	// @interface VKResponse : VKObject
-	[BaseType (typeof(IVKObject))]
-	interface IVKResponse
+	[BaseType (typeof(VKObject))]
+	interface VKResponse
 	{
 		// @property (nonatomic, weak) VKRequest * _Nullable request;
 		[NullAllowed, Export ("request", ArgumentSemantic.Weak)]
-		IVKRequest Request { get; set; }
+		VKRequest Request { get; set; }
 
 		// @property (nonatomic, strong) id json;
 		[Export ("json", ArgumentSemantic.Strong)]
@@ -899,126 +902,106 @@ namespace VKontakte.Core
 		[Export ("responseString")]
 		string ResponseString { get; set; }
 	}
-
-	// @interface VKError (NSError)
-	[Category]
-	[BaseType(typeof(NSError))]
-	interface INSError_VKError
-	{
-		// @property (readonly, nonatomic) VKError * vkError;
-		[Export("vkError")]
-		VKError GetVKError();
-
-		// +(NSError *)errorWithVkError:(VKError *)vkError;
-		[Static]
-		[Internal]
-		[Export("errorWithVkError:")]
-		NSError FromVKError(VKError vkError);
-
-		// -(NSError *)copyWithVkError:(VKError *)vkError;
-		[Export("copyWithVkError:")]
-		NSError CopyWithVKError(VKError vkError);
-	}
 }
 
 namespace VKontakte.API
 {
     // @interface VKApi : NSObject
     [BaseType (typeof(NSObject))]
-	interface IVKApi
+	interface VKApi
 	{
 		// +(VKApiUsers *)users;
 		[Static]
 		[Export ("users")]
-		IVKApiUsers Users { get; }
+		VKApiUsers Users { get; }
 
 		// +(VKApiWall *)wall;
 		[Static]
 		[Export ("wall")]
-		IVKApiWall Wall { get; }
+		VKApiWall Wall { get; }
 
 		// +(VKApiFriends *)friends;
 		[Static]
 		[Export ("friends")]
-		IVKApiFriends Friends { get; }
+		VKApiFriends Friends { get; }
 
 		// +(VKApiGroups *)groups;
 		[Static]
 		[Export ("groups")]
-		IVKApiGroups Groups { get; }
+		VKApiGroups Groups { get; }
 
 		// +(VKRequest *)requestWithMethod:(NSString *)method andParameters:(NSDictionary *)parameters;
 		[Static]
 		[Export ("requestWithMethod:andParameters:")]
-		IVKRequest Request (string method, NSDictionary parameters);
+		VKRequest Request (string method, NSDictionary parameters);
 	}
 
 	// @interface VKApiFriends : VKApiBase
-	[BaseType (typeof(IVKApiBase))]
-	interface IVKApiFriends
+	[BaseType (typeof(VKApiBase))]
+	interface VKApiFriends
 	{
 		// -(VKRequest *)get;
 		[Export ("get")]
-		IVKRequest Get ();
+		VKRequest Get ();
 
 		// -(VKRequest *)get:(NSDictionary *)params;
 		[Export ("get:")]
-		IVKRequest Get (NSDictionary @params);
+		VKRequest Get (NSDictionary @params);
 	}
 
 	// @interface VKApiPhotos : VKApiBase
-	[BaseType (typeof(IVKApiBase))]
-	interface IVKApiPhotos
+	[BaseType (typeof(VKApiBase))]
+	interface VKApiPhotos
 	{
 		// -(VKRequest *)getUploadServer:(NSInteger)albumId;
 		[Export ("getUploadServer:")]
-		IVKRequest GetUploadServer (nint albumId);
+		VKRequest GetUploadServer (nint albumId);
 
 		// -(VKRequest *)getUploadServer:(NSInteger)albumId andGroupId:(NSInteger)groupId;
 		[Export ("getUploadServer:andGroupId:")]
-		IVKRequest GetUploadServer (nint albumId, nint groupId);
+		VKRequest GetUploadServer (nint albumId, nint groupId);
 
 		// -(VKRequest *)getWallUploadServer;
 		[Export ("getWallUploadServer")]
-		IVKRequest GetWallUploadServer ();
+		VKRequest GetWallUploadServer ();
 
 		// -(VKRequest *)getWallUploadServer:(NSInteger)groupId;
 		[Export ("getWallUploadServer:")]
-		IVKRequest GetWallUploadServer (nint groupId);
+		VKRequest GetWallUploadServer (nint groupId);
 
 		// -(VKRequest *)save:(NSDictionary *)params;
 		[Export ("save:")]
-		IVKRequest Save (NSDictionary @params);
+		VKRequest Save (NSDictionary @params);
 
 		// -(VKRequest *)saveWallPhoto:(NSDictionary *)params;
 		[Export ("saveWallPhoto:")]
-		IVKRequest SaveWallPhoto (NSDictionary @params);
+		VKRequest SaveWallPhoto (NSDictionary @params);
 	}
 
 	// @interface VKApiWall : VKApiBase
-	[BaseType (typeof(IVKApiBase))]
-	interface IVKApiWall
+	[BaseType (typeof(VKApiBase))]
+	interface VKApiWall
 	{
 		// -(VKRequest *)post:(NSDictionary *)params;
 		[Export ("post:")]
-		IVKRequest Post (NSDictionary @params);
+		VKRequest Post (NSDictionary @params);
 	}
 
 	// @interface VKApiGroups : VKApiBase
-	[BaseType (typeof(IVKApiBase))]
-	interface IVKApiGroups
+	[BaseType (typeof(VKApiBase))]
+	interface VKApiGroups
 	{
 		// -(VKRequest *)getById:(NSDictionary *)params;
 		[Export ("getById:")]
-		IVKRequest GetById (NSDictionary @params);
+		VKRequest GetById (NSDictionary @params);
 	}
 }
 
 namespace VKontakte.API.Models
 {
     // @interface VKApiObjectArray : VKApiObject <NSFastEnumeration>
-    [BaseType (typeof(IVKApiObject))]
-	interface IVKApiObjectArray // TODO : INSFastEnumeration
+    [BaseType (typeof(VKApiObject))]
+	interface VKApiObjectArray // TODO : INSFastEnumeration
 	{
 		// @property (readonly, nonatomic) NSUInteger count;
 		[Export ("count")]
@@ -1034,20 +1017,20 @@ namespace VKontakte.API.Models
 
 		// -(instancetype)initWithArray:(NSArray *)array objectClass:(Class)objectClass;
 		[Export ("initWithArray:objectClass:")]
-		IntPtr Constructor (IVKApiObject[] array, Class objectClass);
+		IntPtr Constructor (VKApiObject[] array, Class objectClass);
 
 		// -(instancetype)initWithArray:(NSArray *)array;
 		[Export ("initWithArray:")]
-		IntPtr Constructor (IVKApiObject[] array);
+		IntPtr Constructor (VKApiObject[] array);
 
 		// -(id)objectAtIndex:(NSInteger)idx;
 		[Export ("objectAtIndex:")]
-		IVKApiObject ObjectAtIndex (nint idx);
+		VKApiObject ObjectAtIndex (nint idx);
 
 		// -(id)objectAtIndexedSubscript:(NSUInteger)idx __attribute__((availability(ios, introduced=6_0)));
 		[Introduced (PlatformName.iOS, 6, 0)]
 		[Export ("objectAtIndexedSubscript:")]
-		IVKApiObject ObjectAtIndexedSubscript (nuint idx);
+		VKApiObject ObjectAtIndexedSubscript (nuint idx);
 
 		// -(NSEnumerator *)objectEnumerator;
 		[Export ("objectEnumerator")]
@@ -1059,23 +1042,23 @@ namespace VKontakte.API.Models
 
 		// -(void)addObject:(id)object;
 		[Export ("addObject:")]
-		void AddObject (IVKApiObject @object);
+		void AddObject (VKApiObject @object);
 
 		// -(void)removeObject:(id)object;
 		[Export ("removeObject:")]
-		void RemoveObject (IVKApiObject @object);
+		void RemoveObject (VKApiObject @object);
 
 		// -(void)insertObject:(id)object atIndex:(NSUInteger)index;
 		[Export ("insertObject:atIndex:")]
-		void InsertObject (IVKApiObject @object, nuint index);
+		void InsertObject (VKApiObject @object, nuint index);
 
 		// -(id)firstObject;
 		[Export ("firstObject")]
-		IVKApiObject FirstObject { get; }
+		VKApiObject FirstObject { get; }
 
 		// -(id)lastObject;
 		[Export ("lastObject")]
-		IVKApiObject LastObject { get; }
+		VKApiObject LastObject { get; }
 
 		// -(void)serializeTo:(NSMutableDictionary *)dict withName:(NSString *)name;
 		[Export ("serializeTo:withName:")]
@@ -1090,7 +1073,7 @@ namespace VKontakte.API.Models
 namespace VKontakte.API.Methods
 {
     [Static]
-	partial interface IVKApiConst
+	partial interface VKApiConst
 	{
 		// extern NSString *const VK_API_GROUP_ID;
 		[Field("VK_API_GROUP_ID", "__Internal")]
@@ -1268,8 +1251,8 @@ namespace VKontakte.API.Methods
 	}
 	
 	// @interface VKApiBase : VKObject
-	[BaseType (typeof(IVKObject))]
-	interface IVKApiBase
+	[BaseType (typeof(VKObject))]
+	interface VKApiBase
 	{
 		// -(NSString *)getMethodGroup;
 		[Export ("getMethodGroup")]
@@ -1277,52 +1260,52 @@ namespace VKontakte.API.Methods
 
 		// -(VKRequest *)prepareRequestWithMethodName:(NSString *)methodName andParameters:(NSDictionary *)methodParameters;
 		[Export ("prepareRequestWithMethodName:parameters:")]
-		IVKRequest PrepareRequest (string methodName, NSDictionary methodParameters);
+		VKRequest PrepareRequest (string methodName, NSDictionary methodParameters);
 
 		// -(VKRequest *)prepareRequestWithMethodName:(NSString *)methodName andParameters:(NSDictionary *)methodParameters andClassOfModel:(Class)modelClass;
 		[Export ("prepareRequestWithMethodName:parameters:modelClass:")]
-		IVKRequest PrepareRequest (string methodName, NSDictionary methodParameters, Class modelClass);
+		VKRequest PrepareRequest (string methodName, NSDictionary methodParameters, Class modelClass);
 	}
 	
 	// @interface VKApiUsers : VKApiBase
-	[BaseType (typeof(IVKApiBase))]
-	interface IVKApiUsers
+	[BaseType (typeof(VKApiBase))]
+	interface VKApiUsers
 	{
 		// -(VKRequest *)get;
 		[Export ("get")]
-		IVKRequest Get ();
+		VKRequest Get ();
 
 		// -(VKRequest *)get:(NSDictionary *)params;
 		[Export ("get:")]
-		IVKRequest Get (NSDictionary @params);
+		VKRequest Get (NSDictionary @params);
 
 		// -(VKRequest *)search:(NSDictionary *)params;
 		[Export ("search:")]
-		IVKRequest Search (NSDictionary @params);
+		VKRequest Search (NSDictionary @params);
 
 		// -(VKRequest *)isAppUser;
 		[Export ("isAppUser")]
-		IVKRequest IsAppUser ();
+		VKRequest IsAppUser ();
 
 		// -(VKRequest *)isAppUser:(NSInteger)userID;
 		[Export ("isAppUser:")]
-		IVKRequest IsAppUser (nint userId);
+		VKRequest IsAppUser (nint userId);
 
 		// -(VKRequest *)getSubscriptions;
 		[Export ("getSubscriptions")]
-		IVKRequest GetSubscriptions ();
+		VKRequest GetSubscriptions ();
 
 		// -(VKRequest *)getSubscriptions:(NSDictionary *)params;
 		[Export ("getSubscriptions:")]
-		IVKRequest GetSubscriptions (NSDictionary @params);
+		VKRequest GetSubscriptions (NSDictionary @params);
 
 		// -(VKRequest *)getFollowers;
 		[Export ("getFollowers")]
-		IVKRequest GetFollowers ();
+		VKRequest GetFollowers ();
 
 		// -(VKRequest *)getFollowers:(NSDictionary *)params;
 		[Export ("getFollowers:")]
-		IVKRequest GetFollowers (NSDictionary @params);
+		VKRequest GetFollowers (NSDictionary @params);
 	}
 }
 
