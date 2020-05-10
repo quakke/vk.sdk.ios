@@ -35,26 +35,6 @@ namespace VKontakte
 		[Field ("VK_PER_NOTIFY", "__Internal")]
 		NSString Notify { get; }
 
-		// extern NSString *const VK_PER_FRIENDS;
-		[Field ("VK_PER_FRIENDS", "__Internal")]
-		NSString Friends { get; }
-
-		// extern NSString *const VK_PER_PHOTOS;
-		[Field ("VK_PER_PHOTOS", "__Internal")]
-		NSString Photos { get; }
-
-		// extern NSString *const VK_PER_AUDIO;
-		[Field ("VK_PER_AUDIO", "__Internal")]
-		NSString Audio { get; }
-
-		// extern NSString *const VK_PER_VIDEO;
-		[Field ("VK_PER_VIDEO", "__Internal")]
-		NSString Video { get; }
-
-		// extern NSString *const VK_PER_DOCS;
-		[Field ("VK_PER_DOCS", "__Internal")]
-		NSString Docs { get; }
-
 		// extern NSString *const VK_PER_NOTES;
 		[Field ("VK_PER_NOTES", "__Internal")]
 		NSString Notes { get; }
@@ -87,10 +67,6 @@ namespace VKontakte
 		[Field ("VK_PER_STATS", "__Internal")]
 		NSString Stats { get; }
 
-		// extern NSString *const VK_PER_ADS;
-		[Field ("VK_PER_ADS", "__Internal")]
-		NSString Ads { get; }
-
 		// extern NSString *const VK_PER_OFFLINE;
 		[Field ("VK_PER_OFFLINE", "__Internal")]
 		NSString Offline { get; }
@@ -100,12 +76,8 @@ namespace VKontakte
 		NSString NoHttps { get; }
 
 		// extern NSString *const VK_PER_EMAIL;
-		[Field ("VK_PER_EMAIL", "__Internal")]
+		[Field("VK_PER_EMAIL", "__Internal")]
 		NSString Email { get; }
-
-		// extern NSString *const VK_PER_EMAIL;
-		[Field ("VK_PER_MARKET", "__Internal")]
-		NSString Market { get; }
 	}
 	
 	interface IVKSdkDelegate
@@ -1121,6 +1093,10 @@ namespace VKontakte.API.Methods
 	[Static]
 	partial interface VKApiConst
 	{
+		// extern NSString *const VK_API_GROUP_ID;
+		[Field("VK_API_GROUP_ID", "__Internal")]
+		NSString GroupId { get; }
+
 		// extern const VKDisplayType VK_DISPLAY_IOS;
 		[Field("VK_DISPLAY_IOS", "__Internal")]
 		NSString DisplayiOS { get; }
@@ -1143,230 +1119,154 @@ namespace VKontakte.API.Methods
 		NSString DebugClientBundle { get; }
 
 		// extern NSString *const VK_API_USER_ID;
-			[Field("VK_API_USER_ID", "__Internal")]
-			NSString UserId { get; }
+		[Field("VK_API_USER_ID", "__Internal")]
+		NSString UserId { get; }
 
-			// extern NSString *const VK_API_USER_IDS;
-			[Field("VK_API_USER_IDS", "__Internal")]
-			NSString UserIds { get; }
+		// extern NSString *const VK_API_USER_IDS;
+		[Field("VK_API_USER_IDS", "__Internal")]
+		NSString UserIds { get; }
 
-			// extern NSString *const VK_API_FIELDS;
-			[Field("VK_API_FIELDS", "__Internal")] NSString Fields { get; }
+		// extern NSString *const VK_API_FIELDS;
+		[Field("VK_API_FIELDS", "__Internal")]
+        NSString Fields { get; }
 
-			// extern NSString *const VK_API_SORT;
-			[Field("VK_API_SORT", "__Internal")] NSString Sort { get; }
+		// extern NSString *const VK_API_SORT;
+		[Field("VK_API_SORT", "__Internal")]
+        NSString Sort { get; }
 
-			// extern NSString *const VK_API_OFFSET;
-			[Field("VK_API_OFFSET", "__Internal")] NSString Offset { get; }
+		// extern NSString *const VK_API_OFFSET;
+		[Field("VK_API_OFFSET", "__Internal")]
+        NSString Offset { get; }
 
-			// extern NSString *const VK_API_COUNT;
-			[Field("VK_API_COUNT", "__Internal")] NSString Count { get; }
+		// extern NSString *const VK_API_COUNT;
+		[Field("VK_API_COUNT", "__Internal")]
+        NSString Count { get; }
 
-			// extern NSString *const VK_API_OWNER_ID;
-			[Field("VK_API_OWNER_ID", "__Internal")]
-			NSString OwnerId { get; }
+		// extern NSString *const VK_API_OWNER_ID;
+		[Field("VK_API_OWNER_ID", "__Internal")]
+		NSString OwnerId { get; }
 
-			// Auth
-			// extern NSString *const VK_API_LANG;
-			[Field("VK_API_LANG", "__Internal")] NSString Lang { get; }
+		// Auth
+		// extern NSString *const VK_API_LANG;
+		[Field("VK_API_LANG", "__Internal")]
+        NSString Lang { get; }
 
-			// extern NSString *const VK_API_ACCESS_TOKEN;
-			[Field("VK_API_ACCESS_TOKEN", "__Internal")]
-			NSString AccessToken { get; }
+		// extern NSString *const VK_API_ACCESS_TOKEN;
+		[Field("VK_API_ACCESS_TOKEN", "__Internal")]
+		NSString AccessToken { get; }
+		
+		// Get users
+		// extern NSString *const VK_API_NAME_CASE;
+		[Field("VK_API_NAME_CASE", "__Internal")]
+		NSString NameCase { get; }
 
-			// extern NSString *const VK_API_SIG;
-			[Field("VK_API_SIG", "__Internal")] NSString Sig { get; }
+		// Search
+		// extern NSString *const VK_API_Q;
+		[Field("VK_API_Q", "__Internal")]
+        NSString Q { get; }
 
-			// Get users
-			// extern NSString *const VK_API_NAME_CASE;
-			[Field("VK_API_NAME_CASE", "__Internal")]
-			NSString NameCase { get; }
+		// extern NSString *const VK_API_SEX;
+		[Field("VK_API_SEX", "__Internal")]
+        NSString Sex { get; }
 
-			// extern NSString *const VK_API_ORDER;
-			[Field("VK_API_ORDER", "__Internal")] NSString Order { get; }
+		// extern NSString *const VK_API_AGE_FROM;
+		[Field("VK_API_AGE_FROM", "__Internal")]
+		NSString AgeFrom { get; }
 
-			// Get subscriptions
-			// extern NSString *const VK_API_EXTENDED;
-			[Field("VK_API_EXTENDED", "__Internal")]
-			NSString Extended { get; }
+		// extern NSString *const VK_API_AGE_TO;
+		[Field("VK_API_AGE_TO", "__Internal")]
+        NSString AgeTo { get; }
 
-			// Search
-			// extern NSString *const VK_API_Q;
-			[Field("VK_API_Q", "__Internal")] NSString Q { get; }
+		// extern NSString *const VK_API_BIRTH_DAY;
+		[Field("VK_API_BIRTH_DAY", "__Internal")]
+		NSString BirthDay { get; }
 
-			// extern NSString *const VK_API_CITY;
-			[Field("VK_API_CITY", "__Internal")] NSString City { get; }
+		// extern NSString *const VK_API_BIRTH_MONTH;
+		[Field("VK_API_BIRTH_MONTH", "__Internal")]
+		NSString BirthMonth { get; }
 
-			// extern NSString *const VK_API_COUNTRY;
-			[Field("VK_API_COUNTRY", "__Internal")]
-			NSString Country { get; }
+		// extern NSString *const VK_API_BIRTH_YEAR;
+		[Field("VK_API_BIRTH_YEAR", "__Internal")]
+		NSString BirthYear { get; }
 
-			// extern NSString *const VK_API_HOMETOWN;
-			[Field("VK_API_HOMETOWN", "__Internal")]
-			NSString Hometown { get; }
+		// extern NSString *const VK_API_POSITION;
+		[Field("VK_API_POSITION", "__Internal")]
+		NSString Position { get; }
 
-			// extern NSString *const VK_API_UNIVERSITY_COUNTRY;
-			[Field("VK_API_UNIVERSITY_COUNTRY", "__Internal")]
-			NSString UniversityCountry { get; }
+		// extern NSString *const VK_API_FRIENDS_ONLY;
+		[Field("VK_API_FRIENDS_ONLY", "__Internal")]
+		NSString FriendsOnly { get; }
 
-			// extern NSString *const VK_API_UNIVERSITY;
-			[Field("VK_API_UNIVERSITY", "__Internal")]
-			NSString University { get; }
+		// extern NSString *const VK_API_MESSAGE;
+		[Field("VK_API_MESSAGE", "__Internal")]
+		NSString Message { get; }
 
-			// extern NSString *const VK_API_UNIVERSITY_YEAR;
-			[Field("VK_API_UNIVERSITY_YEAR", "__Internal")]
-			NSString UniversityYear { get; }
+		// extern NSString *const VK_API_ATTACHMENT;
+		[Field("VK_API_ATTACHMENT", "__Internal")]
+		NSString Attachment { get; }
 
-			// extern NSString *const VK_API_SEX;
-			[Field("VK_API_SEX", "__Internal")] NSString Sex { get; }
+		// extern NSString *const VK_API_ATTACHMENTS;
+		[Field("VK_API_ATTACHMENTS", "__Internal")]
+		NSString Attachments { get; }
 
-			// extern NSString *const VK_API_STATUS;
-			[Field("VK_API_STATUS", "__Internal")] NSString Status { get; }
+		// extern NSString *const VK_API_SERVICES;
+		[Field("VK_API_SERVICES", "__Internal")]
+		NSString Services { get; }
 
-			// extern NSString *const VK_API_AGE_FROM;
-			[Field("VK_API_AGE_FROM", "__Internal")]
-			NSString AgeFrom { get; }
+		// extern NSString *const VK_API_PUBLISH_DATE;
+		[Field("VK_API_PUBLISH_DATE", "__Internal")]
+		NSString PublishDate { get; }
 
-			// extern NSString *const VK_API_AGE_TO;
-			[Field("VK_API_AGE_TO", "__Internal")] NSString AgeTo { get; }
+		// extern NSString *const VK_API_LAT;
+		[Field("VK_API_LAT", "__Internal")]
+        NSString Lat { get; }
 
-			// extern NSString *const VK_API_BIRTH_DAY;
-			[Field("VK_API_BIRTH_DAY", "__Internal")]
-			NSString BirthDay { get; }
+		// extern NSString *const VK_API_LONG;
+		[Field("VK_API_LONG", "__Internal")]
+        NSString Long { get; }
 
-			// extern NSString *const VK_API_BIRTH_MONTH;
-			[Field("VK_API_BIRTH_MONTH", "__Internal")]
-			NSString BirthMonth { get; }
+		// extern NSString *const VK_API_PLACE_ID;
+		[Field("VK_API_PLACE_ID", "__Internal")]
+		NSString PlaceId { get; }
 
-			// extern NSString *const VK_API_BIRTH_YEAR;
-			[Field("VK_API_BIRTH_YEAR", "__Internal")]
-			NSString BirthYear { get; }
+		// extern NSString *const VK_API_POST_ID;
+		[Field("VK_API_POST_ID", "__Internal")]
+		NSString PostId { get; }
 
-			// extern NSString *const VK_API_ONLINE;
-			[Field("VK_API_ONLINE", "__Internal")] NSString Online { get; }
+		// Errors
+		// extern NSString *const VK_API_ERROR_CODE;
+		[Field("VK_API_ERROR_CODE", "__Internal")]
+		NSString ErrorCode { get; }
 
-			// extern NSString *const VK_API_HAS_PHOTO;
-			[Field("VK_API_HAS_PHOTO", "__Internal")]
-			NSString HasPhoto { get; }
+		// extern NSString *const VK_API_ERROR_MSG;
+		[Field("VK_API_ERROR_MSG", "__Internal")]
+		NSString ErrorMsg { get; }
 
-			// extern NSString *const VK_API_SCHOOL_COUNTRY;
-			[Field("VK_API_SCHOOL_COUNTRY", "__Internal")]
-			NSString SchoolCountry { get; }
+		// extern NSString *const VK_API_ERROR_TEXT;
+		[Field("VK_API_ERROR_TEXT", "__Internal")]
+		NSString ErrorText { get; }
 
-			// extern NSString *const VK_API_SCHOOL_CITY;
-			[Field("VK_API_SCHOOL_CITY", "__Internal")]
-			NSString SchoolCity { get; }
+		// extern NSString *const VK_API_REQUEST_PARAMS;
+		[Field("VK_API_REQUEST_PARAMS", "__Internal")]
+		NSString RequestParams { get; }
 
-			// extern NSString *const VK_API_SCHOOL;
-			[Field("VK_API_SCHOOL", "__Internal")] NSString School { get; }
+		// Captcha
+		// extern NSString *const VK_API_CAPTCHA_IMG;
+		[Field("VK_API_CAPTCHA_IMG", "__Internal")]
+		NSString CaptchaImg { get; }
 
-			// extern NSString *const VK_API_SCHOOL_YEAR;
-			[Field("VK_API_SCHOOL_YEAR", "__Internal")]
-			NSString SchoolYear { get; }
+		// extern NSString *const VK_API_CAPTCHA_SID;
+		[Field("VK_API_CAPTCHA_SID", "__Internal")]
+		NSString CaptchaSid { get; }
 
-			// extern NSString *const VK_API_RELIGION;
-			[Field("VK_API_RELIGION", "__Internal")]
-			NSString Religion { get; }
+		// extern NSString *const VK_API_CAPTCHA_KEY;
+		[Field("VK_API_CAPTCHA_KEY", "__Internal")]
+		NSString CaptchaKey { get; }
 
-			// extern NSString *const VK_API_INTERESTS;
-			[Field("VK_API_INTERESTS", "__Internal")]
-			NSString Interests { get; }
-
-			// extern NSString *const VK_API_COMPANY;
-			[Field("VK_API_COMPANY", "__Internal")]
-			NSString Company { get; }
-
-			// extern NSString *const VK_API_POSITION;
-			[Field("VK_API_POSITION", "__Internal")]
-			NSString Position { get; }
-
-			// extern NSString *const VK_API_GROUP_ID;
-			[Field("VK_API_GROUP_ID", "__Internal")]
-			NSString GroupId { get; }
-
-			// extern NSString *const VK_API_GROUP_IDS;
-			[Field("VK_API_GROUP_IDS", "__Internal")]
-			NSString GroupIds { get; }
-
-			// extern NSString *const VK_API_FRIENDS_ONLY;
-			[Field("VK_API_FRIENDS_ONLY", "__Internal")]
-			NSString FriendsOnly { get; }
-
-			// extern NSString *const VK_API_FROM_GROUP;
-			[Field("VK_API_FROM_GROUP", "__Internal")]
-			NSString FromGroup { get; }
-
-			// extern NSString *const VK_API_MESSAGE;
-			[Field("VK_API_MESSAGE", "__Internal")]
-			NSString Message { get; }
-
-			// extern NSString *const VK_API_ATTACHMENT;
-			[Field("VK_API_ATTACHMENT", "__Internal")]
-			NSString Attachment { get; }
-
-			// extern NSString *const VK_API_ATTACHMENTS;
-			[Field("VK_API_ATTACHMENTS", "__Internal")]
-			NSString Attachments { get; }
-
-			// extern NSString *const VK_API_SERVICES;
-			[Field("VK_API_SERVICES", "__Internal")]
-			NSString Services { get; }
-
-			// extern NSString *const VK_API_SIGNED;
-			[Field("VK_API_SIGNED", "__Internal")] NSString Signed { get; }
-
-			// extern NSString *const VK_API_PUBLISH_DATE;
-			[Field("VK_API_PUBLISH_DATE", "__Internal")]
-			NSString PublishDate { get; }
-
-			// extern NSString *const VK_API_LAT;
-			[Field("VK_API_LAT", "__Internal")] NSString Lat { get; }
-
-			// extern NSString *const VK_API_LONG;
-			[Field("VK_API_LONG", "__Internal")] NSString Long { get; }
-
-			// extern NSString *const VK_API_PLACE_ID;
-			[Field("VK_API_PLACE_ID", "__Internal")]
-			NSString PlaceId { get; }
-
-			// extern NSString *const VK_API_POST_ID;
-			[Field("VK_API_POST_ID", "__Internal")]
-			NSString PostId { get; }
-
-			// Errors
-			// extern NSString *const VK_API_ERROR_CODE;
-			[Field("VK_API_ERROR_CODE", "__Internal")]
-			NSString ErrorCode { get; }
-
-			// extern NSString *const VK_API_ERROR_MSG;
-			[Field("VK_API_ERROR_MSG", "__Internal")]
-			NSString ErrorMsg { get; }
-
-			// extern NSString *const VK_API_ERROR_TEXT;
-			[Field("VK_API_ERROR_TEXT", "__Internal")]
-			NSString ErrorText { get; }
-
-			// extern NSString *const VK_API_REQUEST_PARAMS;
-			[Field("VK_API_REQUEST_PARAMS", "__Internal")]
-			NSString RequestParams { get; }
-
-			// Captcha
-			// extern NSString *const VK_API_CAPTCHA_IMG;
-			[Field("VK_API_CAPTCHA_IMG", "__Internal")]
-			NSString CaptchaImg { get; }
-
-			// extern NSString *const VK_API_CAPTCHA_SID;
-			[Field("VK_API_CAPTCHA_SID", "__Internal")]
-			NSString CaptchaSid { get; }
-
-			// extern NSString *const VK_API_CAPTCHA_KEY;
-			[Field("VK_API_CAPTCHA_KEY", "__Internal")]
-			NSString CaptchaKey { get; }
-
-			// extern NSString *const VK_API_REDIRECT_URI;
-			[Field("VK_API_REDIRECT_URI", "__Internal")]
-			NSString RedirectUri { get; }
-		}
+		// extern NSString *const VK_API_REDIRECT_URI;
+		[Field("VK_API_REDIRECT_URI", "__Internal")]
+		NSString RedirectUri { get; }
+	}
 	
 	// @interface VKApiBase : VKObject
 	[BaseType (typeof(VKObject))]
