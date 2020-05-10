@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CoreFoundation;
 using Foundation;
 using ObjCRuntime;
@@ -853,10 +854,6 @@ namespace VKontakte.Core
 		[Export ("executeWithResultBlock:errorBlock:")]
 		void Execute (Action<VKResponse> completeBlock, Action<NSError> errorBlock);
 
-		// -(void)executeAfter:(VKRequest *)request withResultBlock:(void (^)(VKResponse *))completeBlock errorBlock:(void (^)(NSError *))errorBlock;
-		[Export ("executeAfter:withResultBlock:errorBlock:")]
-		void ExecuteAfter (VKRequest request, Action<VKResponse> completeBlock, Action<NSError> errorBlock);
-
 		// -(void)start;
 		[Export ("start")]
 		void Start ();
@@ -881,7 +878,7 @@ namespace VKontakte.Core
 		[Export ("setPreferredLang:")]
 		void SetPreferredLang (string lang);
 	}
-	
+
 	// @interface VKResponse : VKObject
 	[BaseType (typeof(VKObject))]
 	interface VKResponse

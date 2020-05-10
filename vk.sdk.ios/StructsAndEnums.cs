@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using CoreAnimation;
 using CoreFoundation;
@@ -13,6 +14,7 @@ using ObjCRuntime;
 using OpenGLES;
 using Security;
 using UIKit;
+using VKontakte.Core;
 
 namespace VKontakte
 {
